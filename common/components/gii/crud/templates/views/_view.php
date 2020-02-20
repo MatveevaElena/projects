@@ -51,7 +51,6 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 
             [
 				'class' => 'yii\grid\ActionColumn',
-				'template' => ACLRole::getAccessRole(),
 			],
         ],
     ]); ?>

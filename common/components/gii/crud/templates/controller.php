@@ -44,10 +44,6 @@ use common\modules\roles\models\ACLRole;
  */
 class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
-    public function behaviors()
-    {
-        return ACLRole::defaultBehaviors();
-    }
 
     /**
      * Lists all <?= $modelClass ?> models.

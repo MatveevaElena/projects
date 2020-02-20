@@ -26,15 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= "<?= " ?>Html::encode($this->title) ?></h1>
     <p>
-        <?= "<?= " ?>ACLRole::accessControllerAction('create')? Html::a(<?= "Yii::t('ML', 'Create'), ['create'], ['class' => 'btn btn-success']) : '' ?>\n" ?>
-        <?= "<?= " ?>ACLRole::accessControllerAction('update')? Html::a(Yii::t('ML', <?= $generator->generateString('Update') ?>), ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) : '' ?>
-        <?= "<?= " ?>ACLRole::accessControllerAction('delete')? Html::a(Yii::t('ML', <?= $generator->generateString('Delete') ?>), ['delete', <?= $urlParams ?>], [
+        <?= "<?= " ?>Html::a(<?= "Yii::t('ML', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>\n" ?>
+        <?= "<?= " ?>Html::a(Yii::t('ML', <?= $generator->generateString('Update') ?>), ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
+        <?= "<?= " ?>Html::a(Yii::t('ML', <?= $generator->generateString('Delete') ?>), ['delete', <?= $urlParams ?>], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('ML', <?= $generator->generateString('Are you sure you want to delete this item?') ?>),
                 'method' => 'post',
             ],
-        ]) : '' ?>
+        ]) ?>
     </p>
 
     <?= "<?= " ?>DetailView::widget([
