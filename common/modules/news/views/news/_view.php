@@ -20,8 +20,8 @@ use common\modules\roles\models\ACLRole;
             'time',
             'author',
             'img',
-            // 'title',
-            // 'short',
+             'title',
+            'short',
 
             [
 				'class' => 'yii\grid\ActionColumn',
