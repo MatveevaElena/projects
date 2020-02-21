@@ -4,6 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\datetime\DateTimePicker;
 
+use yii\helpers\ArrayHelper;
+use common\modules\news\models\Authors;
+use common\modules\news\assets\AuthorsAsset;
+AuthorsAsset::register($this);
+
 /* @var $this yii\web\View */
 /* @var $model common\modules\news\models\News */
 /* @var $form yii\widgets\ActiveForm */
@@ -15,7 +20,9 @@ use kartik\datetime\DateTimePicker;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'author')->dropDownList(ArrayHelper::map(Authors::find()->all(), 'id', 'name')) ?>
+
+    <button type="button" class="btn btn-success" onclick="addAuthor()">Добавить автора</button>
 
     <?= $form->field($model, 'time')-> widget(DateTimePicker::className(),[
         'type' => DateTimePicker::TYPE_INPUT,

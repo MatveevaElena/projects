@@ -4,9 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use common\modules\roles\models\ACLRole;
 
-
 /* @var $this yii\web\View */
-/* @var $searchModel common\modules\news\models\searches\NewsSearch */
+/* @var $searchModel common\modules\news\models\searches\AuthorsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 ?>
 
@@ -17,12 +16,7 @@ use common\modules\roles\models\ACLRole;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'text:ntext',
-            'time',
-            'author',
-            'img',
-             'title',
-            'short',
+            'name',
 
             [
 				'class' => 'yii\grid\ActionColumn',

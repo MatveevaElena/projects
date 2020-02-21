@@ -3,27 +3,27 @@
 namespace common\modules\news\controllers;
 
 use Yii;
-use common\modules\news\models\News;
-use common\modules\news\models\searches\NewsSearch;
+use common\modules\news\models\Authors;
+use common\modules\news\models\searches\AuthorsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\modules\roles\models\ACLRole;
 
-use yii\web\UploadedFile;
-use common\components\helpers\Upload;
+use yii\helpers\ArrayHelper;
+
 /**
- * NewsController implements the CRUD actions for News model.
+ * AuthorsController implements the CRUD actions for Authors model.
  */
-class NewsController extends Controller
+class AuthorsController extends Controller
 {
 
     /**
-     * Lists all News models.
+     * Lists all Authors models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new NewsSearch();
+        $searchModel = new AuthorsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -33,7 +33,7 @@ class NewsController extends Controller
     }
 
     /**
-     * Displays a single News model.
+     * Displays a single Authors model.
      * @param integer $id
      * @return mixed
      */
@@ -45,24 +45,17 @@ class NewsController extends Controller
     }
 
     /**
-     * Creates a new News model.
+     * Creates a new Authors model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new News();
+        $model = new Authors();
 
-        if ($model->load(Yii::$app->request->post())) {
-            if(($fileInstence = UploadedFile:: getInstance($model, 'img')))
-            {
-                $model->img = Upload::file($fileInstence, 'news', true);
-            } 
-            if($model-> save()){
-                return $this->redirect(['view','id' => $model->id]);
-            }
-        }
-        else {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -70,7 +63,7 @@ class NewsController extends Controller
     }
 
     /**
-     * Updates an existing News model.
+     * Updates an existing Authors model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -79,16 +72,9 @@ class NewsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if(($fileInstence = UploadedFile:: getInstance($model, 'img')))
-            { 
-                $model->img = Upload::file($fileInstence, 'news', true);
-            }
-            if($model-> save()){
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } 
-        else {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -96,7 +82,7 @@ class NewsController extends Controller
     }
 
     /**
-     * Deletes an existing News model.
+     * Deletes an existing Authors model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -109,22 +95,40 @@ class NewsController extends Controller
     }
 
     /**
-     * Finds the News model based on its primary key value.
+     * Finds the Authors model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return News the loaded model
+     * @return Authors the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = News::findOne($id)) !== null) {
+        if (($model = Authors::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    public function actionShowimg($path)
+    public function actionCreateauthor($name)
     {
-	    return base64_encode(file_get_contents(Yii::getAlias('@uploads').'/'.$path));
+        $model = new Authors;
+        $model->name = $name;
+        return $model->save();
+    }
+
+    public function actionGetauthors()
+    {
+        $authors_list = ArrayHelper::map(Authors::find()->all(), 'id', 'name');
+        $DOM = '';
+        $last_key = end(array_keys($authors_list));
+        foreach($authors_list as $id => $name){
+            if($last_key == $id){
+                $selected = 'selected';
+            }else{
+                $selected = '';
+            }
+            $DOM.= "<option value=\"$id\" $selected>$name</option>\r\n";
+        }
+        return $DOM;
     }
 }

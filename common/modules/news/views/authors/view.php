@@ -4,16 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\modules\roles\models\ACLRole;
 
-use common\modules\news\assets\NewsAsset;
-NewsAsset::register($this);
 /* @var $this yii\web\View */
-/* @var $model common\modules\news\models\News */
+/* @var $model common\modules\news\models\Authors */
 
-$this->title = Yii::t('ML', $model->title);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('ML', 'News'), 'url' => ['index']];
+$this->title = Yii::t('ML', $model->name);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('ML', 'Authors'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="news-view">
+<div class="authors-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
@@ -29,21 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?= DetailView::widget([
-	'model' => $model,
-	'attributes' => [
-		'id',
-		'text:ntext',
-		'time',
-		'author',
-		[
-			'attribute'=>'img',
-			'value' => function($model){
-				return '<button type="button" class="show-img-class" onclick="showImage(\''.$model->img.'\')">Загрузить изображение</button><br><img id="news_img">';
-			},
-			'format' => 'raw'
-		],
-		'title',
-		'short',
-	],
-]) ?>
+        'model' => $model,
+        'attributes' => [
+            'id',
+            'name',
+        ],
+    ]) ?>
+
 </div>
